@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+
+    <!--this link works with the help of WebConfig-->
+    <link rel="stylesheet" th:href="@{'/css/mainSpringBoot.css'}"/>
+    <title>Contact List</title>
+</head>
+<body>
+
+    <ul>
+        <li th:each="contact : ${contacts}">
+            <p th:text="${contact.name}"></p>
+            <p th:text="${contact.surname}"></p>
+            <p th:text="${contact.phone}"></p>
+            <div>
+                    <a th:href="@{'contactDetail-'+${contact.id}}">
+                        <button> DETAILS </button>
+                    </a>
+            </div>
+
+                <img th:src="@{'/ava/' + ${contact.avatar}}" alt=""/>
+            <div>
+
+            </div>
+        </li>
+    </ul>
+
+</body>
+</html>
