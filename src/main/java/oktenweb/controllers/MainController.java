@@ -2,7 +2,10 @@ package oktenweb.controllers;
 
 import oktenweb.dao.ContactDAO;
 import oktenweb.models.Contact;
+import oktenweb.models.User;
+import oktenweb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -96,5 +99,22 @@ public class MainController {
 //    {
 //        return contactDAO.findAll();
 //    }
+
+    @PostMapping("/successURL")
+    public String successURL(){
+        return "redirect:/showAllContacts";
+    }
+
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @PostMapping("/saveUser")
+    public String saveUser(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword())); // to encode the pass
+        userService.save(user);
+        return "redirect:/login";
+    }
     
 }

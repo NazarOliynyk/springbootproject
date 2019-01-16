@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html  xmlns:xmlns:th="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -13,6 +13,14 @@
     <h2> Hello </h2>
     <h2> [[${message}]]</h2>
     <h2 th:text="${message}"> </h2>
+
+        <h3> Registration  a new USER </h3>
+        <form th:action="@{/saveUser}" method="post">
+            <input type="" name="username" placeholder="username"/>
+            <input type="password" name="password" placeholder="password"/>
+            <input type="submit" value="go!"/>
+        </form>
+
 
     <h3> Creating object from parameters with method GET (use the form below) </h3>
     <form action="/save" method="get" >
@@ -40,46 +48,80 @@
         <a href="/showAllContacts"> show All Contacts </a>
     </div>
 
-    <h3> AJAX works here </h3>
-    <div>
-        <input type="" id="name"/>
-        <input type="" id="surname"/>
-        <input type="" id="phone"/>
-        <button id="saveButton">save</button>
-    </div>
+    <!--<h3> AJAX works here </h3>-->
+    <!--<div>-->
+        <!--<input type="" id="name"/>-->
+        <!--<input type="" id="surname"/>-->
+        <!--<input type="" id="phone"/>-->
+        <!--<button id="saveButton">save</button>-->
+    <!--</div>-->
 
-    <div id="representer"></div>
-    <!--this main.js is in static folder in case if we need to use static content-->
-    <!--<script src="/styles/main.js"></script>-->
+    <!--<div id="representer"></div>-->
+    <!--&lt;!&ndash;this main.js is in static folder in case if we need to use static content&ndash;&gt;-->
+    <!--&lt;!&ndash;<script src="/styles/main.js"></script>&ndash;&gt;-->
+
+    <!--<script>-->
+        <!--$("#saveButton").click(function () {-->
+            <!--let name = $("#name").val();-->
+            <!--let surname = $("#surname").val();-->
+            <!--let phone = $("#phone").val();-->
+            <!--$("#representer").empty();-->
+            <!--$.ajax({-->
+                <!--url: '/saveAJAX',-->
+                <!--type: 'POST',-->
+                <!--contentType: 'application/json',-->
+                <!--data: JSON.stringify({name, surname, phone}),-->
+                <!--success: function (response) {-->
+                    <!--console.log(response);-->
+                    <!--for(const singleContact of response){-->
+                       <!--let $div= $('<div/>', {-->
+                            <!--text: singleContact.id+-->
+                            <!--' '+singleContact.name+-->
+                            <!--' '+singleContact.surname+-->
+                             <!--' '+singleContact.phone-->
+                        <!--})-->
+                        <!--$("#representer").append($div);-->
+                    <!--}-->
+
+                <!--},-->
+                <!--error: function (err) {-->
+                    <!--console.log(err);-->
+                <!--}-->
+            <!--});-->
+        <!--})-->
+    <!--</script>-->
+
+    <h3> Ajax With Multipard Goes here</h3>
+
+    <form id="f1">
+        <input type="" name="name" placeholder="name" />
+        <input type="" name="surname" placeholder="surname" />
+        <input type="" name="phone" placeholder="phone" />
+        <input type="file" name="image" placeholder="nimage" />
+        <button id="btn">GO!</button>
+    </form>
 
     <script>
-        $("#saveButton").click(function () {
-            let name = $("#name").val();
-            let surname = $("#surname").val();
-            let phone = $("#phone").val();
-            $("#representer").empty();
-            $.ajax({
-                url: '/saveAJAX',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({name, surname, phone}),
-                success: function (response) {
-                    console.log(response);
-                    for(const singleContact of response){
-                       let $div= $('<div/>', {
-                            text: singleContact.id+
-                            ' '+singleContact.name+
-                            ' '+singleContact.surname+
-                             ' '+singleContact.phone
-                        })
-                        $("#representer").append($div);
-                    }
+        $("#btn").click(function (event) {
 
+              event.preventDefault(); // to not to reload the page
+//            ajaxMultipartFormData
+              $.ajax({
+                url: "/upload",
+                type: "POST",
+                data: new FormData($("#f1")[0]),
+                enctype: 'multipart/form-data',
+                processData: false, // forbids to create JSON
+                contentType: false,
+                cache: false,
+                success: function () {
+                    console.log("ok!");
                 },
                 error: function (err) {
-                    console.log(err);
+                  console.log(err);
                 }
-            });
+              });
+
         })
     </script>
 

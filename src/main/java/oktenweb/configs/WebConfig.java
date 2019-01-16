@@ -35,6 +35,15 @@ public class WebConfig implements WebMvcConfigurer{
     }
 
     @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+
+        // it calls login template having the url /login called
+        registry.addViewController("/login").setViewName("/login");
+
+    }
+
+
+    @Override
     public void configurePathMatch(PathMatchConfigurer pathMatchConfigurer) {
 
     }
@@ -69,10 +78,6 @@ public class WebConfig implements WebMvcConfigurer{
 
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry viewControllerRegistry) {
-
-    }
 
     @Override
     public void configureViewResolvers(ViewResolverRegistry viewResolverRegistry) {
